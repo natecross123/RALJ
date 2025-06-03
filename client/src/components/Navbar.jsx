@@ -1,13 +1,27 @@
 import React, { useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
 
 const Navbar = () => {
     const [open, setOpen] = React.useState(false)
-    const{user, setUser,setShowUserLogin,navigate, setSearchQuery, searchQuery,getCartCount } = useAppContext();
+    const{user, setUser,setShowUserLogin,navigate, setSearchQuery, searchQuery,getCartCount, axios } = useAppContext();
 
     const logout=async()=>{
+        try {
+            const{data} = await axios.get('/api/user/logout')
+            if(data.success){
+                toast.success(data.message)
+                setUser(null);
+                navigate('/')
+
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(data.message)
+        }
         setUser(null);
         navigate('/')
     }
@@ -27,9 +41,12 @@ const Navbar = () => {
 
     {/* Desktop Menu */}
     <div className="hidden sm:flex items-center gap-8">
+
         <NavLink to= '/'>Home</NavLink>
         <NavLink to= '/products'>Allproduct</NavLink>
-        <NavLink to= '/'>contact</NavLink>
+         <NavLink to= '/Aboutus'>About Us</NavLink>
+        <NavLink to= '/Faq'>FAQ</NavLink>
+      
 
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
             <input onChange={(e)=> setSearchQuery(e.target.value)} className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search products" />
