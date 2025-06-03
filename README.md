@@ -1,4 +1,4 @@
-# RALJ
+# Green Cart
 
 🛒 Grocery Store E-commerce Website
 A full-featured e-commerce web application for a grocery store, allowing users to browse products, add them to cart, and checkout seamlessly. Admins can manage inventory, track orders, and update store details.
